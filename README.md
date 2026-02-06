@@ -60,9 +60,9 @@ pip install tensorflow          # for BiLSTM
 
 ## ⚡ Quick Start
 ```bash
-git clone https://github.com/tarekmasryo/imdb-reviews-eda-baselines
-cd imdb-reviews-eda-baselines
-jupyter notebook imdb_reviews_eda_baselines.ipynb
+git clone https://github.com/tarekmasryo/text-sentiment-analysis.git
+cd text-sentiment-analysis
+jupyter notebook text-sentiment-classification.ipynb
 ```
 
 - Place `IMDB Dataset.csv` under `./data/` if not running on Kaggle.
