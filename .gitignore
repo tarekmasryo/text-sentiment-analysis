@@ -13,9 +13,11 @@ ENV/
 # Data & artifacts (keep folders via .gitkeep)
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/README.md
 
 artifacts/*
 !artifacts/.gitkeep
+!artifacts/README.md
 
 # Outputs
 reports/

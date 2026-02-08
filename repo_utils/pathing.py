@@ -73,3 +73,10 @@ def resolve_data_path(
         f"Tried: DATA_PATH env var, {local_subdir}/, Kaggle /kaggle/input/.\n"
         f"Tip: put the file under 'data/raw/' or set DATA_PATH."
     )
+def artifacts_dir(local_subdir: str = "artifacts") -> Path:
+    """Return a writable artifacts directory (local repo or Kaggle working dir)."""
+    if _is_kaggle() and Path("/kaggle/working").exists():
+        return (Path("/kaggle/working") / local_subdir).resolve()
+    root = project_root()
+    return (root / local_subdir).resolve()
+
