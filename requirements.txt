@@ -5,4 +5,8 @@ seaborn
 scikit-learn
 joblib
 nltk
-BiLSTM
+contractions
+wordcloud
+
+# Optional (BiLSTM section)
+# tensorflow>=2.15

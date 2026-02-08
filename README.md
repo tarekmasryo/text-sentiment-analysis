@@ -23,7 +23,24 @@ Clean EDA → strong classical baselines (NB / LogReg / Linear SVM + calibration
   - `review` — raw movie review text  
   - `sentiment` — `positive` / `negative`  
 
-> Default path (Kaggle): `/kaggle/input/imdb-dataset-of-50k-movie-reviews/IMDB Dataset.csv`
+> Data loading supports **local** `data/raw/` and **Kaggle** `/kaggle/input/` via `repo_utils/pathing.py`.
+
+---
+
+## 📁 Repo layout
+
+```text
+.
+├── text-sentiment-classification.ipynb
+├── data/
+│   └── raw/               # put IMDB Dataset.csv here (local runs)
+├── artifacts/             # saved models / vectorizer / tables
+├── repo_utils/
+│   └── pathing.py         # local + Kaggle path helpers
+├── CASE_STUDY.md
+├── requirements.txt
+└── .gitignore
+```
 
 ---
 
@@ -51,10 +68,13 @@ Clean EDA → strong classical baselines (NB / LogReg / Linear SVM + calibration
 - **DL**: `tensorflow>=2.14`  
 
 ```bash
-pip install pandas numpy scikit-learn matplotlib seaborn joblib
-pip install contractions nltk   # optional
-pip install tensorflow          # for BiLSTM
+pip install -r requirements.txt
 ```
+
+Notes:
+- For **classical models only**, `requirements.txt` is enough.
+- To run the **BiLSTM** section, install TensorFlow separately: `pip install tensorflow>=2.15`.
+
 
 ---
 
@@ -62,10 +82,17 @@ pip install tensorflow          # for BiLSTM
 ```bash
 git clone https://github.com/tarekmasryo/text-sentiment-analysis.git
 cd text-sentiment-analysis
+
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+
 jupyter notebook text-sentiment-classification.ipynb
 ```
 
-- Place `IMDB Dataset.csv` under `./data/` if not running on Kaggle.
+
+- Place `IMDB Dataset.csv` under `data/raw/` if not running on Kaggle.
 
 ---
 
@@ -93,6 +120,11 @@ jupyter notebook text-sentiment-classification.ipynb
 
 ---
 
+
+---
+
+## 🧾 Case Study
+See **CASE_STUDY.md** for the project story, decisions, and takeaways (without repeated run steps).
 
 ## 🙌 Credits
 Dataset: **IMDB 50K Reviews** (Kaggle).  
