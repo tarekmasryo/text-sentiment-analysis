@@ -148,7 +148,7 @@ Notes:
 ---
 
 ## 🧾 Case Study
-See **CASE_STUDY.md** for the project story, decisions, and takeaways (without repeated run steps).
+See **CASE_STUDY.md** for the project story, decisions, and takeaways.
 
 ## 🙌 Credits
 Dataset: **IMDB 50K Reviews** (Kaggle).  
