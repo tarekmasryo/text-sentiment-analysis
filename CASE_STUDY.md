@@ -1,67 +1,77 @@
-# 🧠 Case Study — IMDB Sentiment (50K Reviews)
+# Case Study — IMDB Sentiment Classification
 
 ## Problem
-Turn raw review text into a reliable **binary sentiment** signal (`positive` vs `negative`) with baselines that are:
-- easy to reproduce
-- strong enough to be a real reference point
-- calibrated / threshold-aware when scores are used for decisions
 
----
+Build a binary sentiment classifier for English movie reviews while keeping the evaluation clean and reproducible.
+
+The goal is not to create the most complex NLP model. The goal is to show a reliable workflow that avoids common mistakes such as preprocessing leakage, threshold selection on the test set, or publishing metrics without error analysis.
 
 ## Data
-- **Dataset:** IMDB 50K Reviews
-- **Grain:** one row per review
-- **Fields:** `review` (text), `sentiment` (label)
 
-Practical notes:
-- Text contains **HTML** and informal writing (negations, contractions, typos).
-- Keep preprocessing **light** to avoid erasing signal (especially negation).
+Dataset: IMDB Dataset of 50K Movie Reviews from Kaggle.
 
----
+Expected columns:
+
+- `review`: raw movie review text
+- `sentiment`: `positive` or `negative`
+
+The notebook checks missing values, exact duplicates, label conflicts, and duplicate cleaned reviews before the split.
 
 ## Approach
-### EDA
-- Label balance, review length distribution
-- Common tokens / n-grams (sanity checks, not “pretty charts”)
 
-### Baselines
-- **TF‑IDF** vectorization (fit on train only)
-- Classical models:
-  - MultinomialNB
-  - Logistic Regression
-  - Linear SVM (with optional calibration)
+The final notebook uses classical NLP models because they are fast, explainable, and strong on this dataset.
 
-### Evaluation
-- Holdout split + stratified CV for stability checks
-- Metrics: Accuracy, F1, ROC‑AUC, PR‑AUC
-- For score-based decisions: tune a **threshold** by F1 on the PR curve
-- Calibration: reliability curve + Brier score (when probabilistic scores exist)
+Models compared:
 
-### Deep Learning (baseline, optional)
-- Compact **BiLSTM** to compare against strong classical TF‑IDF baselines
-- Kept intentionally minimal (baseline, not SOTA)
+- Multinomial Naive Bayes
+- Logistic Regression
+- Calibrated Linear SVM
 
----
+All text preprocessing is part of the scikit-learn pipeline:
 
-## Results (what to look for)
-- Strong TF‑IDF + linear models typically dominate as a baseline.
-- Calibration improves interpretability when using probabilities for downstream decisions.
-- BiLSTM is included as a reference point, not as the default recommendation.
+```text
+TextCleaner → TF-IDF → Model
+```
 
-Artifacts saved:
-- `artifacts/model_summary.csv`
-- `artifacts/tfidf_vectorizer.joblib`
-- `artifacts/<best_model>_model.joblib`
+This keeps preprocessing consistent during cross-validation, final fitting, and inference.
 
----
+## Evaluation
 
-## Decisions & Takeaways
-- **Default recommendation:** calibrated linear model on TF‑IDF (fast, strong, explainable).
-- **Thresholding matters:** “0.5” is rarely optimal when optimizing F1 or operating constraints.
-- **Explainability:** logistic regression coefficients are a quick sanity-check tool.
+The workflow uses:
 
----
+- Train / validation / test split
+- Cross-validation on the training split
+- Validation-based model and threshold selection
+- Final test evaluation only at the end
 
-## Next Steps
-- Add a small **error taxonomy** (negation, sarcasm, domain terms) from FP/FN samples.
-- Try a compact transformer baseline (DistilBERT) for a modern reference, with the same evaluation discipline.
+Metrics include:
+
+- Accuracy
+- Precision
+- Recall
+- F1
+- ROC-AUC
+- PR-AUC
+- Brier score
+
+The notebook also includes confusion matrix, calibration, feature signals, error analysis, and behavior checks by review length and prediction confidence.
+
+## Artifacts
+
+A full run saves:
+
+```text
+artifacts/sentiment_pipeline.joblib
+artifacts/threshold.json
+artifacts/metrics.json
+artifacts/training_config.json
+artifacts/model_card.md
+```
+
+A reload smoke test verifies that the saved pipeline can be loaded and used for inference.
+
+## Main takeaway
+
+Classical TF-IDF models remain strong for this task when the evaluation workflow is handled carefully.
+
+The model should be treated as validated for English movie reviews only. Other domains or languages need their own evaluation before use.

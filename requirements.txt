@@ -1,12 +1,6 @@
 numpy
 pandas
 matplotlib
-seaborn
 scikit-learn
 joblib
-nltk
-contractions
-wordcloud
-
-# Optional (BiLSTM section)
-# tensorflow>=2.15
+jupyter

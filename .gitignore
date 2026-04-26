@@ -1,16 +1,11 @@
 __pycache__/
+*.py[cod]
 .ipynb_checkpoints/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-ENV/
-# ===== Level B (No Overkill) =====
 
-# Data & artifacts (keep folders via .gitkeep)
+.venv/
+venv/
+env/
+
 data/raw/*
 !data/raw/.gitkeep
 !data/raw/README.md
@@ -19,9 +14,8 @@ artifacts/*
 !artifacts/.gitkeep
 !artifacts/README.md
 
-# Outputs
-reports/
 outputs/
+reports/
 *.png
 *.jpg
 *.jpeg

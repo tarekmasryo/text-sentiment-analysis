@@ -1,13 +1,22 @@
 # Data
 
-This repo expects the raw dataset file to be placed locally under:
+The raw dataset is not committed to this repository.
 
-- `data/raw/IMDB Dataset.csv`
+For local runs, place the CSV file here:
 
-Notes:
-- `data/raw/` is **gitignored** by default.
-- If you prefer not to copy the file, set an environment variable:
+```text
+data/raw/IMDB Dataset.csv
+```
 
-  - `DATA_PATH=/full/path/to/IMDB Dataset.csv`
+Then set this inside the notebook:
 
-- On Kaggle, the notebook falls back to `/kaggle/input/...` automatically.
+```python
+DATA_PATH_OVERRIDE = "data/raw/IMDB Dataset.csv"
+```
+
+Expected columns:
+
+```text
+review
+sentiment
+```
